@@ -1,0 +1,517 @@
+Here's the full code. Tap the copy button at the top-right of the code box to copy all of it at once.
+
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TOPIK 3 Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gothic+A1:wght@400;500;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+:root{
+  --paper:#A3A19B; --ink:#121212; --muted:#33322F; --line:#7E7C76;
+  --steel-a:#E9E9E7; --steel-b:#BDBEBB; --steel-c:#DCDDDB;
+  --card:#CBCBC8;
+  --celadon:#2340CF; --celadon-soft:#C9CEE6;
+  --done:#BCC79E; --done-ink:#3B4F16;
+  --stamp:#3B4F16; --warn-soft:#BDBCB7; --warn:#121212;
+  --leather:#141414; --on-leather:#EDEDEA;
+  --noise-o:.22;
+  --display:"Gaegu", "Comic Sans MS", cursive;
+  --body:"Gothic A1", "Apple SD Gothic Neo", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+body{background:radial-gradient(ellipse 60% 40% at 15% 20%,rgba(255,255,255,.18),transparent 70%),radial-gradient(ellipse 50% 35% at 85% 60%,rgba(0,0,0,.08),transparent 70%),radial-gradient(ellipse 70% 30% at 40% 95%,rgba(255,255,255,.12),transparent 70%),var(--paper);background-attachment:fixed;color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;position:relative;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:22px 48px}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:var(--noise-o);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.4 0 0 0 0 0.4 0 0 0 0 0.38 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+.wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+h1,h2,h3{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0;text-transform:uppercase;letter-spacing:.02em}
+h1{font-size:2.5rem;line-height:1}
+h2{font-size:1.65rem;line-height:1.05}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;color:var(--muted);text-transform:lowercase}
+.muted{color:var(--muted)}
+header{display:flex;flex-direction:column;gap:6px}
+.sign{border:1px solid var(--line);border-radius:6px;padding:20px 18px 16px;display:flex;flex-direction:column;gap:8px;
+  background:linear-gradient(115deg,var(--steel-a) 0%,var(--steel-b) 38%,var(--steel-c) 55%,var(--steel-b) 80%,var(--steel-a) 100%)}
+.sign h1 .ko{display:block;font-size:1.5rem;color:var(--ink)}
+.sign .arrow{display:block;width:62%;height:2px;background:var(--ink);position:relative;margin-top:4px}
+.sign .arrow::after{content:"";position:absolute;right:-1px;top:-5px;width:10px;height:10px;border-top:2px solid var(--ink);border-right:2px solid var(--ink);transform:rotate(45deg)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{border:1px solid var(--line);border-radius:4px;padding:10px 12px;min-width:0;background:linear-gradient(115deg,var(--steel-a) 0%,var(--steel-b) 45%,var(--steel-c) 60%,var(--steel-b) 100%)}
+.stat b{display:block;font-family:var(--mono);font-size:1.35rem;font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink)}
+.stat span{font-family:var(--mono);font-size:.7rem;color:var(--muted);text-transform:lowercase}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;gap:6px;padding-block:8px;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;font-family:var(--mono);font-size:.8rem;text-transform:lowercase;padding:10px 6px;border-radius:4px;border:1px solid var(--line);background:var(--steel-a);color:var(--ink);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--leather);border-color:var(--leather);color:var(--on-leather)}
+button:focus-visible,input:focus-visible{outline:2px solid var(--celadon);outline-offset:2px}
+section.panel{display:flex;flex-direction:column;gap:14px}
+.daynav{display:flex;align-items:center;gap:8px}
+.daynav .d{flex:1;text-align:center;min-width:0;display:flex;flex-direction:column;align-items:center;gap:4px}
+.daynav .d strong{display:block;font-family:var(--display);font-size:1.5rem;line-height:1.1;text-transform:uppercase}
+.iconbtn{font:inherit;width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:1.2rem}
+.linkbtn{font-family:var(--mono);font-size:.78rem;border:none;background:none;color:var(--celadon);cursor:pointer;text-decoration:underline;padding:0}
+.pill{display:inline-block;font-family:var(--mono);font-size:.7rem;padding:3px 10px;border-radius:99px;background:var(--leather);color:var(--on-leather)}
+.note{border:1px dashed var(--ink);color:var(--warn);border-radius:4px;padding:10px 12px;font-size:.88rem;background:var(--card)}
+.bar{height:6px;background:var(--line);border-radius:0;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--celadon);width:0;transition:width .35s}
+.tasks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.task{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:4px;padding:13px 12px;cursor:pointer;transition:background .2s;background:linear-gradient(115deg,var(--steel-a) 0%,var(--steel-b) 45%,var(--steel-c) 60%,var(--steel-b) 100%)}
+.task input{appearance:none;flex:none;width:24px;height:24px;border:2px solid var(--ink);border-radius:50%;margin:1px 0 0;cursor:pointer;display:grid;place-content:center;background:transparent}
+.task input:checked{background:var(--done-ink);border-color:var(--done-ink)}
+.task input:checked::after{content:"";width:6px;height:11px;border:solid var(--paper);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.task .t{min-width:0}
+.task .t b{font-weight:700;display:block}
+.task .t small{color:var(--muted);font-size:.84rem}
+.task.done{background:var(--done)}
+.task.done b{text-decoration:line-through;text-decoration-color:var(--done-ink);text-decoration-thickness:2px}
+.tag{font-family:var(--mono);font-size:.64rem;color:var(--celadon);border:1px solid var(--celadon);border-radius:3px;padding:0 4px;margin-left:6px;vertical-align:2px;font-weight:500}
+.minrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:.86rem;flex-wrap:wrap}
+.minrow .muted{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.switch{display:flex;align-items:center;gap:8px;cursor:pointer}
+.switch input{width:18px;height:18px;accent-color:var(--celadon)}
+.stampbox{display:flex;justify-content:center}
+.stamp{width:136px;height:136px;border-radius:50%;border:3px solid var(--stamp);color:var(--stamp);display:grid;place-content:center;text-align:center;font-family:var(--display);font-weight:700;font-size:1.6rem;line-height:1.1;transform:rotate(-10deg);animation:stamp .45s cubic-bezier(.2,1.6,.4,1)}
+.stamp small{display:block;font-size:.66rem;font-family:var(--mono);font-weight:500;letter-spacing:.06em}
+@keyframes stamp{from{transform:rotate(-10deg) scale(2);opacity:0}to{transform:rotate(-10deg) scale(1);opacity:1}}
+.phase{border:1px solid var(--line);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px;background:linear-gradient(115deg,var(--steel-a) 0%,var(--steel-b) 45%,var(--steel-c) 60%,var(--steel-b) 100%)}
+.phase.now{border:2px solid var(--celadon)}
+.phase header{gap:2px}
+.tracker{display:flex;flex-direction:column;gap:6px}
+.tracker .lbl{display:flex;justify-content:space-between;font-size:.86rem;gap:8px;font-weight:700}
+.tracker .lbl span:last-child{font-family:var(--mono);font-weight:500;color:var(--muted);font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}
+.grid button{aspect-ratio:1;max-width:100%;border:1px solid var(--line);border-radius:2px;background:var(--steel-a);color:var(--muted);font-family:var(--mono);font-size:.66rem;cursor:pointer;padding:0;min-width:0}
+.grid button.on{background:var(--celadon);border-color:var(--celadon);color:var(--paper)}
+.ms{display:flex;flex-direction:column;gap:6px}
+.ms label{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;cursor:pointer}
+.ms input{width:18px;height:18px;accent-color:var(--celadon);flex:none;margin-top:2px}
+.score{display:flex;gap:6px;flex-wrap:wrap}
+.score span{font-family:var(--mono);font-size:.72rem;border:1px solid var(--line);border-radius:3px;padding:3px 8px;background:var(--card)}
+.score span.goal{border-color:var(--celadon);color:var(--celadon)}
+.timer{border:1px solid var(--line);border-radius:6px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:12px;
+  background:linear-gradient(115deg,var(--steel-a) 0%,var(--steel-b) 38%,var(--steel-c) 55%,var(--steel-b) 80%,var(--steel-a) 100%)}
+.timer .clock{font-family:var(--mono);font-weight:500;font-size:3.4rem;font-variant-numeric:tabular-nums;line-height:1}
+.clock.brk{color:var(--done-ink)}
+.dots{display:flex;gap:8px}
+.dots i{width:10px;height:10px;border-radius:50%;border:2px solid var(--ink)}
+.dots i.on{background:var(--celadon);border-color:var(--celadon)}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.btn{font-family:var(--mono);font-size:.82rem;padding:9px 16px;border-radius:4px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--leather);border-color:var(--leather);color:var(--on-leather)}
+.btn.sel{background:var(--leather);border-color:var(--leather);color:var(--on-leather)}
+#lens .btn{min-width:56px;padding:8px 10px}
+.steps{margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:8px;font-size:.92rem}
+.steps li::marker{font-family:var(--mono);color:var(--celadon)}
+.steps b{font-weight:700}
+.tips{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.tips li{border:1px solid var(--line);border-radius:4px;padding:12px 14px;background:linear-gradient(115deg,var(--steel-a) 0%,var(--steel-b) 45%,var(--steel-c) 60%,var(--steel-b) 100%)}
+.tips b{display:block;font-family:var(--display);font-size:1.25rem;text-transform:uppercase;line-height:1.1;margin-bottom:3px}
+.tips p{margin:0;color:var(--muted);font-size:.9rem}
+footer{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="sign">
+      <span class="eyebrow">@topik_roadmap · 3급 in january → 4급 in april</span>
+      <h1>This is the TOPIK plan I was telling you about<span class="ko">토픽 로드맵</span></h1>
+      <span class="arrow" aria-hidden="true"></span>
+      <span class="muted" style="font-size:.86rem">Tick things off as you go. Your checks save on this device.</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="sStreak">0</b><span>day streak</span></div>
+      <div class="stat"><b id="sRoad">0%</b><span>roadmap done</span></div>
+      <div class="stat"><b id="sPhase">1</b><span id="sPhaseName">phase</span></div>
+    </div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-today" aria-selected="true" data-p="today">Today</button>
+    <button role="tab" id="tab-road" aria-selected="false" data-p="road">Roadmap</button>
+    <button role="tab" id="tab-kit" aria-selected="false" data-p="kit">Focus kit</button>
+  </nav>
+
+  <section class="panel" id="p-today">
+    <div class="daynav">
+      <button class="iconbtn" id="prev" aria-label="Previous day">‹</button>
+      <div class="d"><strong id="dLabel"></strong><span class="pill" id="dPhase"></span></div>
+      <button class="iconbtn" id="next" aria-label="Next day">›</button>
+    </div>
+    <div style="text-align:center"><button class="linkbtn" id="goToday" hidden>Back to today</button></div>
+    <div id="dNote"></div>
+    <div class="minrow">
+      <label class="switch"><input type="checkbox" id="minOnly"> Bad day? Show the minimum only</label>
+      <span class="muted" id="dCount"></span>
+    </div>
+    <div class="bar"><i id="dBar"></i></div>
+    <ul class="tasks" id="tasks"></ul>
+    <div class="stampbox" id="stampbox"></div>
+  </section>
+
+  <section class="panel" id="p-road" hidden>
+    <div class="score"><span>3급 = 120</span><span>4급 = 150</span><span>5급 = 190</span><span class="goal">out of 300</span></div>
+    <div id="phases"></div>
+  </section>
+
+  <section class="panel" id="p-kit" hidden>
+    <div class="timer">
+      <span class="eyebrow" id="tMode">Focus</span>
+      <div class="clock" id="clock">25:00</div>
+      <div class="dots" id="dots" aria-label="Focus blocks this round"><i></i><i></i><i></i><i></i></div>
+      <div class="row" id="lens">
+        <button class="btn sel" data-min="25">25</button><button class="btn" data-min="30">30</button>
+        <button class="btn" data-min="35">35</button><button class="btn" data-min="40">40</button>
+        <button class="btn" data-min="45">45</button><button class="btn" data-min="50">50</button>
+        <button class="btn" data-min="55">55</button><button class="btn" data-min="60">1 hr</button>
+      </div>
+      <span class="muted" id="tBreak" style="font-size:.85rem"></span>
+      <div class="row">
+        <button class="btn primary" id="tStart">Start</button>
+        <button class="btn" id="tSkip">Skip</button>
+        <button class="btn" id="tReset">Reset</button>
+      </div>
+      <span class="muted" id="tDone">0 blocks done today</span>
+    </div>
+    <div class="phase">
+      <header><span class="eyebrow">Daily chat practice</span><h2>How we practice in the chat</h2></header>
+      <ol class="steps">
+        <li><b>Send your voice memo.</b> Open our Korean chat and say it again using the keyboard mic, or type it. Say it the way you did, mistakes included.</li>
+        <li><b>Get corrections.</b> I'll mark each mistake, explain why in one line, and give you a more natural version.</li>
+        <li><b>Say the fixed version out loud twice.</b> This is where the correction sticks.</li>
+        <li><b>Translation drill.</b> I give you 5 English sentences using only grammar you've already studied, mixed with that day's TTMIK, KGIU and HTSK points. Say each answer out loud first, then send it.</li>
+        <li><b>Mini conversation.</b> I ask you 3 questions in Korean. Answer in full sentences and use at least one connector: ~는데, ~아/어서, ~지만, ~(으)니까.</li>
+        <li><b>Keep a mistake list.</b> Write the corrections you get in the back of your notebook. Repeat mistakes become the next day's drill.</li>
+      </ol>
+      <p class="muted" style="margin:0;font-size:.88rem">To start, send: "오늘 연습하자" with your memo.</p>
+    </div>
+    <ul class="tips">
+      <li><b>Keep a bad-day minimum</b><p>2 TTMIK lessons and your vocab notebook still count as a day. Your streak survives, and missing one day doesn't turn into missing a week.</p></li>
+      <li><b>Work in Pomodoro blocks</b><p>Use the Pomodoro timer above, from 25 minutes up to 1 hour. Put your phone in another room.</p></li>
+      <li><b>Set up tomorrow tonight</b><p>Leave the book open on the right page and write the first task on a sticky note. Starting is the hard part, so make it take no effort.</p></li>
+      <li><b>Only look at Today</b><p>Keep the full roadmap closed while you study. A long list makes it harder to start.</p></li>
+      <li><b>Study with someone</b><p>Play a "study with me" video, or call a friend who's also working.</p></li>
+      <li><b>Switch things up when you're bored</b><p>Change the order of your tasks, or swap in Iyagi or a drama clip. It still counts as long as it's Korean.</p></li>
+      <li><b>Use your runs</b><p>Listen to TTMIK on easy and long runs. Skip it on interval days.</p></li>
+      <li><b>Sleep is part of the plan</b><p>Memory locks in while you sleep. A late night of cramming costs you the next day.</p></li>
+    </ul>
+  </section>
+
+  <footer>Oct 26–Nov 9 · Level 5 · Nov 10–24 · Level 6 · Nov 25–Dec 31 · sprint · January · TOPIK 3 · Feb–April · TOPIK 4/5</footer>
+</div>
+
+<script>
+(function(){
+const KEY="topik-roadmap-v1";
+let S={days:{},grids:{},ms:{},blocks:{}};
+try{const r=localStorage.getItem(KEY); if(r) S=Object.assign(S,JSON.parse(r));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+const pad=n=>String(n).padStart(2,"0");
+const key=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const mk=(y,m,d)=>new Date(y,m-1,d);
+const today=new Date(); today.setHours(0,0,0,0);
+let view=new Date(today);
+const START=mk(2026,10,26);
+
+function phaseOf(d){
+  if(d<mk(2026,10,26)) return 0;
+  if(d<mk(2026,11,10)) return 1;
+  if(d<mk(2026,11,25)) return 2;
+  if(d<mk(2027,1,1)) return 3;
+  if(d<mk(2027,2,1)) return 4;
+  return 5;
+}
+const PHASES={
+  0:{name:"Starts October 26",range:""},
+  1:{name:"TTMIK Level 5",range:"October 26 – November 9"},
+  2:{name:"TTMIK Level 6",range:"November 10 – 24"},
+  3:{name:"Fluency & TOPIK 3 sprint",range:"November 25 – December 31"},
+  4:{name:"Take TOPIK 3",range:"January"},
+  5:{name:"Advance to TOPIK 4/5",range:"February – April"}
+};
+const dd=(d,from)=>Math.round((d-from)/864e5);
+
+const KG=[
+ [1,"Expressing Conjecture and Supposition",["-아/어 보이다","-(으)ㄴ/는 모양이다","-(으)ㄹ 텐데","-(으)ㄹ 테니까","-(으)ㄹ걸요","-(으)ㄴ/는/(으)ㄹ 줄 몰랐다(알았다)","-(으)ㄹ지도 모르다"]],
+ [2,"Expressing Contrast",["-기는 하지만, -기는 -지만","-(으)ㄴ/는 반면에","-(으)ㄴ/는데도"]],
+ [3,"Narrative and Informal Forms",["서술체","반말체"]],
+ [4,"Expressing Reasons",["-거든요","-잖아요","-느라고","-는 바람에","-(으)ㄴ/는 탓에","-고 해서","-(으)ㄹ까 봐"]],
+ [5,"Citing the Speech or Writing of Others",["-다고요?","-다고 하던데","-다면서요?","-다니요?"]],
+ [6,"Expressing Resolution and Intent",["-(으)ㄹ까 하다","-고자","-(으)려던 참이다","-(으)ㄹ 겸 -(으)ㄹ 겸","-아/어야지요"]],
+ [7,"Giving Recommendations and Advice",["-(으)ㄹ 만하다","-도록 하다","-지 그래요?"]],
+ [8,"Expressing Recollection",["-던","-더라고요","-던데요"]],
+ [9,"Passive Expressions",["단어 피동 (-이/히/리/기-)","-아/어지다","-게 되다"]],
+ [10,"Causative Expressions",["단어 사동 (-이/히/리/기/우/추-)","-게 하다"]],
+ [11,"Expressing Conditions",["-아/어야","-거든"]],
+ [12,"Expressing Additional Information",["-(으)ㄹ 뿐만 아니라","-(으)ㄴ/는 데다가","조차","만 해도"]],
+ [13,"Expressing Mid-Action",["-는 길에","-다가"]],
+ [14,"Expressing Degree",["-(으)ㄹ 정도로","만 하다","-(으)ㄴ/는/(으)ㄹ 만큼"]],
+ [15,"Expressing Choice",["아무+(이)나 / 아무+도","(이)나","(이)라도","-든지 -든지","-(으)ㄴ/는 대신에"]],
+ [16,"Expressing Time and Sequential Behavior",["만에","-아/어 가지고","-아/어다가","-고서"]],
+ [17,"Expressing Discoveries and Results",["-고 보니","-다 보니","-다 보면","-더니","-았/었더니","-다가는","-(으)ㄴ/는 셈이다"]],
+ [18,"Expressing Situational States of Being",["-아/어 놓다","-아/어 두다","-(으)ㄴ 채로","-(으)ㄴ/는 대로"]],
+ [19,"Expressing Attributes and Characteristics",["-(으)ㄴ/는 편이다","-스럽다","-답다"]],
+ [20,"Expressing Emphasis",["얼마나 -(으)ㄴ/는지 모르다","-(으)ㄹ 수밖에 없다","-(으)ㄹ 뿐이다","(이)야말로"]],
+ [21,"Expressing Aims and Intentions",["-게","-도록"]],
+ [22,"Expressing Completion",["-았/었다가","-았/었던","-아/어 버리다","-고 말다"]],
+ [23,"Expressing Futility",["-(으)나 마나","-아/어 봤자"]],
+ [24,"Expressing Hypothetical Situations",["-(느)ㄴ다면","-았/었더라면","-(으)ㄹ 뻔하다"]],
+ [25,"Expressing Regret",["-(으)ㄹ걸 그랬다","-았/었어야 했는데"]],
+ [26,"Expressing Habits and Attitudes",["-곤 하다","-기는요","-(으)ㄴ/는 척하다"]]
+];
+const KGP=[]; KG.forEach(([u,t,ps])=>ps.forEach((g,i)=>KGP.push({u,t,n:i+1,g})));
+const KG12=KGP.filter(x=>x.u<=12).length;
+function kgFor(d){
+  if(d<mk(2027,2,1)){
+    const i=dd(d,mk(2026,10,26));
+    if(i<KG12) return {x:KGP[i],rev:false};
+    return {x:KGP[(i-KG12)%KG12],rev:true};
+  }
+  const j=dd(d,mk(2027,2,1)), late=KGP.length-KG12;
+  if(j<late) return {x:KGP[KG12+j],rev:false};
+  return {x:KGP[KG12+((j-late)%late)],rev:true};
+}
+
+function tasksFor(d){
+  const p=phaseOf(d); if(p===0) return [];
+  const T=[]; const add=(id,b,s,min)=>T.push({id,b,s,min:!!min});
+  const htsk=(lesson,day1,note)=>{
+    if(lesson===null){
+      add("anki","Vocab notebook: review",note||"No new words today. Cover the Korean side and test yourself",true);
+      return;
+    }
+    if(day1){
+      add("anki","Vocab notebook: write and learn HTSK Lesson "+lesson+" words","Day 1: write the ~30 new words and their short example phrases in your notebook, then review your older pages",true);
+      add("htsk","HTSK Lesson "+lesson+" · Day 1 (input)","Read the new HTSK grammar explanation. Add key sample sentences to your notes.");
+    }else{
+      add("anki","Vocab notebook: review","Day 2: no new words. Cover the Korean side and test yourself on recent pages",true);
+      add("htsk","HTSK Lesson "+lesson+" · Day 2 (output)","Write 5 original sentences combining your HTSK vocabulary with the KGIU and TTMIK grammar points learned over the last 48 hours.");
+    }
+  };
+  const kgiu=()=>{const {x,rev}=kgFor(d);
+    add("kgiu",(rev?"KGIU review · ":"KGIU · ")+"Unit "+x.u+", Point "+x.n+": "+x.g,
+      "Unit "+x.u+" · "+x.t+". "+(rev?"Re-read the explanation and redo the 3 exercises.":"Read the 2-page explanation, review the comparison box, and complete the 3 exercises."));};
+  const speak=(src)=>{
+    add("exp","Rubber band sentence expansion","Take 1 simple thought and expand it into 3 clauses using ~는데, ~아/어서, ~지만, ~(으)니까.");
+    add("shad","Shadowing","Shadow one of the dialogues from "+src+" at normal native speed.");
+    add("memo","60-second voice memo","Record yourself talking about your day without stopping for more than 2 seconds. Don't back up to correct mistakes.");
+    add("chat","Korean chat practice with Claude","Say your voice memo again into the chat (mic or typing) for corrections, then do today's translation drill and mini conversation. Steps are in the Focus kit tab.");
+  };
+  if(p===1||p===2){
+    const h=p-1, j=dd(d, h?mk(2026,11,10):mk(2026,10,26)), lv=5+h, a=2*j+1;
+    add("ttA","TTMIK Level "+lv+" · Lesson "+a,"Listen to Lessons "+a+" and "+(a+1)+" back-to-back. Speaking check: say one sentence from this lesson out loud 3 times without reading the transcript.",true);
+    add("ttB","TTMIK Level "+lv+" · Lesson "+(a+1),"Speaking check: say one sentence from this lesson out loud 3 times without reading the transcript.",true);
+    if(j<14) htsk(26+7*h+Math.floor(j/2), j%2===0);
+    else htsk(null,false,"HTSK Lessons "+(26+7*h)+"–"+(32+7*h)+" are done. No new lesson today");
+    kgiu();
+    speak("your TTMIK lessons");
+  }else if(p===3||p===4){
+    add("iya","TTMIK Iyagi (이야기) or native audio shadowing","Replaces the TTMIK lessons, for listening speed and mouth agility.",true);
+    if(p===3){const j=dd(d,mk(2026,11,25)); if(j<22) htsk(40+Math.floor(j/2), j%2===0); else htsk(null,false,"HTSK Unit 2 is finished. No new words");}
+    else htsk(null,false,"HTSK Unit 2 is finished. No new words");
+    kgiu();
+    add("pp","Timed practice: past TOPIK II paper","Questions 1–25");
+    add("w","Writing: Questions 51–53","From past TOPIK II papers");
+    speak("your Iyagi or native audio");
+  }else{
+    const j=dd(d,mk(2027,2,1));
+    if(j<30){const lv=j<15?7:8, a=2*(j%15)+1;
+      add("ttA","TTMIK Level "+lv+" · Lesson "+a,"Listen to Lessons "+a+" and "+(a+1)+" back-to-back. Speaking check: say one sentence from this lesson out loud 3 times without reading the transcript.",true);
+      add("ttB","TTMIK Level "+lv+" · Lesson "+(a+1),"Speaking check: say one sentence from this lesson out loud 3 times without reading the transcript.",true);
+    }else add("ttA","TTMIK Levels 7–8 are done","Replay 2 lessons you remember least",true);
+    const hl=51+Math.floor(j/2);
+    if(hl<=75) htsk(hl, j%2===0); else htsk(null,false,"HTSK Unit 3 is finished. No new words");
+    kgiu();
+    add("q54","Question 54 essay writing","TOPIK II writing");
+    speak("your TTMIK lessons");
+  }
+  return T;
+}
+
+function noteFor(d){
+  if(phaseOf(d)===0) return "Day 1 is Monday, October 26. Tap › to see it.";
+  if(d.getTime()===mk(2026,10,26).getTime()) return "Day 1: TTMIK Level 5 Lessons 1 & 2 · KGIU Unit 1, Point 1 (-아/어 보이다) · HTSK Lesson 26 (Day 1) · 3 expanded sentences + 60-second voice memo";
+  return "";
+}
+
+const MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const DOW=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+function isDone(d,onlyMin){
+  const t=tasksFor(d).filter(x=>!onlyMin||x.min), st=S.days[key(d)]||{};
+  return t.length>0 && t.every(x=>st[x.id]);
+}
+function streak(){
+  let n=0, d=new Date(today);
+  if(!isDone(d,true)) d.setDate(d.getDate()-1);
+  while(d>=mk(2026,10,26) && isDone(d,true)){n++; d.setDate(d.getDate()-1);}
+  return n;
+}
+
+const $=id=>document.getElementById(id);
+function renderToday(){
+  const k=key(view), st=S.days[k]||(S.days[k]={});
+  const p=phaseOf(view);
+  $("dLabel").textContent=(view.getTime()===today.getTime()?"Today · ":"")+DOW[view.getDay()]+", "+MON[view.getMonth()]+" "+view.getDate();
+  $("dPhase").textContent= p? PHASES[p].range+" · "+PHASES[p].name : PHASES[0].name;
+  $("goToday").hidden = view.getTime()===today.getTime();
+  const n=noteFor(view); $("dNote").innerHTML = n?'<div class="note"></div>':""; if(n) $("dNote").firstChild.textContent=n;
+  const onlyMin=$("minOnly").checked;
+  const T=tasksFor(view).filter(x=>!onlyMin||x.min);
+  const ul=$("tasks"); ul.innerHTML="";
+  T.forEach(t=>{
+    const li=document.createElement("li");
+    li.className="task"+(st[t.id]?" done":"");
+    const id="t-"+t.id;
+    li.innerHTML='<input type="checkbox" id="'+id+'"><label class="t" for="'+id+'"><b></b><small></small></label>';
+    li.querySelector("b").textContent=t.b;
+    if(t.min){const g=document.createElement("span");g.className="tag";g.textContent="MIN";li.querySelector("b").appendChild(g);}
+    li.querySelector("small").textContent=t.s;
+    const cb=li.querySelector("input"); cb.checked=!!st[t.id];
+    cb.addEventListener("change",()=>{st[t.id]=cb.checked; save(); renderToday(); renderStats();});
+    ul.appendChild(li);
+  });
+  const done=T.filter(t=>st[t.id]).length;
+  $("dCount").textContent=T.length? done+" / "+T.length : "";
+  $("dBar").style.width=(T.length?done/T.length*100:0)+"%";
+  const sb=$("stampbox");
+  const all=tasksFor(view), full=all.length&&all.every(t=>st[t.id]), mn=isDone(view,true);
+  if(full) sb.innerHTML='<div class="stamp"><small>ALL DONE</small>참 잘했어요</div>';
+  else if(mn && onlyMin) sb.innerHTML='<div class="stamp" style="width:112px;height:112px;font-size:1.05rem"><small>MINIMUM</small>잘했어요</div>';
+  else sb.innerHTML="";
+}
+
+const TRACK=[
+  {phase:1,id:"tt5",label:"TTMIK Level 5 · Lessons 1–30",n:30,from:1},
+  {phase:1,id:"ht1",label:"HTSK Lessons 26–32",n:7,from:26},
+  {phase:1,id:"kg1",label:"KGIU Intermediate Units 1–3",n:3,from:1},
+  {phase:2,id:"tt6",label:"TTMIK Level 6 · Lessons 1–30",n:30,from:1},
+  {phase:2,id:"ht2a",label:"HTSK Lessons 33–39",n:7,from:33},
+  {phase:2,id:"kg2a",label:"KGIU Intermediate Units 4–6",n:3,from:4},
+  {phase:3,id:"kg7",label:"KGIU Intermediate Units 7–12",n:6,from:7},
+  {phase:3,id:"ht3",label:"HTSK Lessons 40–50 (finish Unit 2)",n:11,from:40},
+  {phase:5,id:"tt7",label:"TTMIK Level 7",n:30,from:1},
+  {phase:5,id:"tt8",label:"TTMIK Level 8",n:30,from:1},
+  {phase:5,id:"kg3",label:"KGIU Units 13–26",n:14,from:13},
+  {phase:5,id:"ht5",label:"HTSK Unit 3 · Lessons 51–75",n:25,from:51}
+];
+const MS={
+  4:[["topik3","Take TOPIK 3 · target 120+ points"]],
+  5:[["topik45","Take TOPIK 4/5"]]
+};
+
+function renderRoad(){
+  const box=$("phases"); box.innerHTML="";
+  const cur=phaseOf(today);
+  [1,2,3,4,5].forEach(p=>{
+    const sec=document.createElement("div");
+    sec.className="phase"+(p===cur?" now":"");
+    sec.style.marginBottom="12px";
+    sec.innerHTML='<header><span class="eyebrow"></span><h2></h2></header>';
+    sec.querySelector(".eyebrow").textContent="Phase "+p+" · "+PHASES[p].range+(p===cur?" · you are here":"");
+    sec.querySelector("h2").textContent=PHASES[p].name;
+    const ms=document.createElement("div"); ms.className="ms";
+    (MS[p]||[]).forEach(([id,txt])=>{
+      const l=document.createElement("label"); const i=document.createElement("input"); i.type="checkbox"; i.id="ms-"+id; i.checked=!!S.ms[id];
+      i.addEventListener("change",()=>{S.ms[id]=i.checked;save();renderStats();});
+      l.appendChild(i); l.appendChild(document.createTextNode(txt)); ms.appendChild(l);
+    });
+    sec.appendChild(ms);
+    TRACK.filter(t=>t.phase===p).forEach(t=>{
+      const arr=S.grids[t.id]||(S.grids[t.id]=[]);
+      const tr=document.createElement("div"); tr.className="tracker";
+      tr.innerHTML='<div class="lbl"><span></span><span></span></div><div class="grid"></div>';
+      tr.querySelector(".lbl span").textContent=t.label;
+      const cnt=tr.querySelector(".lbl span:last-child");
+      const upd=()=>cnt.textContent=arr.filter(Boolean).length+" / "+t.n;
+      upd();
+      const g=tr.querySelector(".grid");
+      for(let i=0;i<t.n;i++){
+        const b=document.createElement("button"); b.textContent=t.from+i; b.className=arr[i]?"on":"";
+        b.setAttribute("aria-label",t.label+" "+(t.from+i)); b.setAttribute("aria-pressed",!!arr[i]);
+        b.addEventListener("click",()=>{arr[i]=!arr[i]; b.className=arr[i]?"on":""; b.setAttribute("aria-pressed",arr[i]); save(); upd(); renderStats();});
+        g.appendChild(b);
+      }
+      sec.appendChild(tr);
+    });
+    box.appendChild(sec);
+  });
+}
+
+function renderStats(){
+  $("sStreak").textContent=streak();
+  let tot=0,on=0; TRACK.forEach(t=>{tot+=t.n; on+=(S.grids[t.id]||[]).slice(0,t.n).filter(Boolean).length;});
+  Object.values(MS).flat().forEach(([id])=>{tot++; if(S.ms[id]) on++;});
+  $("sRoad").textContent=Math.round(on/tot*100)+"%";
+  const p=phaseOf(today); $("sPhase").textContent=p||"–"; $("sPhaseName").textContent=p?PHASES[p].name:"starts Oct 26";
+}
+
+document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  ["today","road","kit"].forEach(p=>$("p-"+p).hidden = p!==b.dataset.p);
+}));
+$("prev").onclick=()=>{view.setDate(view.getDate()-1);renderToday();};
+$("next").onclick=()=>{view.setDate(view.getDate()+1);renderToday();};
+$("goToday").onclick=()=>{view=new Date(today);renderToday();};
+$("minOnly").onchange=renderToday;
+
+// pomodoro timer
+let focusMin=25, mode="focus", round=0, left=focusMin*60, tick=null, endAt=0;
+const fmt=x=>pad(Math.floor(x/60))+":"+pad(x%60);
+const tk=key(today);
+const shortB=()=>Math.round(focusMin/5);
+const longB=()=>focusMin>=45?20:15;
+function showBlocks(){const n=S.blocks[tk]||0; $("tDone").textContent=n+(n===1?" focus block":" focus blocks")+" done today";}
+function draw(){
+  $("clock").textContent=fmt(left);
+  $("tMode").textContent= mode==="focus"?"Focus · block "+(round+1)+" of 4": mode==="short"?"Short break":"Long break";
+  $("tBreak").textContent="Breaks: "+shortB()+" min after each block, "+longB()+" min after 4 blocks";
+  document.querySelectorAll("#dots i").forEach((d,i)=>d.classList.toggle("on",i<round));
+  $("clock").classList.toggle("brk",mode!=="focus");
+}
+function beep(){try{const c=new (window.AudioContext||window.webkitAudioContext)();[0,.25,.5].forEach(t=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;g.gain.value=.15;o.connect(g);g.connect(c.destination);o.start(c.currentTime+t);o.stop(c.currentTime+t+.15);});}catch(e){}}
+function stop(){clearInterval(tick);tick=null;$("tStart").textContent="Start";}
+function run(){
+  endAt=Date.now()+left*1000; $("tStart").textContent="Pause";
+  tick=setInterval(()=>{left=Math.max(0,Math.round((endAt-Date.now())/1000)); draw(); if(left===0) next(true);},500);
+}
+function next(finished){
+  stop();
+  if(mode==="focus"){
+    if(finished){S.blocks[tk]=(S.blocks[tk]||0)+1;save();showBlocks();}
+    round++;
+    if(round>=4){mode="long";left=longB()*60;} else {mode="short";left=shortB()*60;}
+    if(finished){beep();run();}
+  }else{
+    if(mode==="long") round=0;
+    mode="focus"; left=focusMin*60;
+    if(finished) beep();
+  }
+  draw();
+}
+document.querySelectorAll("[data-min]").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("[data-min]").forEach(x=>x.classList.toggle("sel",x===b));
+  focusMin=+b.dataset.min; stop(); mode="focus"; left=focusMin*60; draw();
+}));
+$("tStart").onclick=()=>{ if(tick){stop();$("tStart").textContent="Resume";} else run(); };
+$("tSkip").onclick=()=>next(false);
+$("tReset").onclick=()=>{stop();mode="focus";round=0;left=focusMin*60;draw();};
+
+renderToday(); renderRoad(); renderStats(); showBlocks(); draw();
+})();
+</script>
+</body>
+</html>
+```
+
+If the copy button doesn't show up on your iPad, open the TOPIK-Roadmap.html file I sent earlier, tap Share, and choose Copy. You'll get the same code.
