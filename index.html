@@ -123,7 +123,7 @@ footer{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:ce
       <span class="eyebrow">@topik_roadmap · 3급 in january → 4급 in april</span>
       <h1>This is the TOPIK plan I was telling you about<span class="ko">토픽 로드맵</span></h1>
       <span class="arrow" aria-hidden="true"></span>
-      <span class="muted" style="font-size:.86rem">Tick things off as you go. Your checks save on this device.</span>
+      <span class="muted" style="font-size:.86rem">Tick things off as you go. <span id="syncMsg">Your checks save on this device.</span></span>
     </div>
     <div class="stats">
       <div class="stat"><b id="sStreak">0</b><span>day streak</span></div>
@@ -203,7 +203,7 @@ footer{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:ce
     </ul>
   </section>
 
-  <footer>Oct 26–Nov 9 · Level 5 · Nov 10–24 · Level 6 · Nov 25–Dec 31 · sprint · January · TOPIK 3 · Feb–April · TOPIK 4/5</footer>
+  <footer>Oct 28–Nov 11 · Level 5 · Nov 12–26 · Level 6 · Nov 27–Dec 31 · sprint · January · TOPIK 3 · Feb–April · TOPIK 4/5</footer>
 </div>
 
 <script>
@@ -218,21 +218,20 @@ const key=d=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const mk=(y,m,d)=>new Date(y,m-1,d);
 const today=new Date(); today.setHours(0,0,0,0);
 let view=new Date(today);
-const START=mk(2026,10,26);
 
 function phaseOf(d){
-  if(d<mk(2026,10,26)) return 0;
-  if(d<mk(2026,11,10)) return 1;
-  if(d<mk(2026,11,25)) return 2;
+  if(d<mk(2026,10,28)) return 0;
+  if(d<mk(2026,11,12)) return 1;
+  if(d<mk(2026,11,27)) return 2;
   if(d<mk(2027,1,1)) return 3;
   if(d<mk(2027,2,1)) return 4;
   return 5;
 }
 const PHASES={
-  0:{name:"Starts October 26",range:""},
-  1:{name:"TTMIK Level 5",range:"October 26 – November 9"},
-  2:{name:"TTMIK Level 6",range:"November 10 – 24"},
-  3:{name:"Fluency & TOPIK 3 sprint",range:"November 25 – December 31"},
+  0:{name:"Starts October 28",range:""},
+  1:{name:"TTMIK Level 5",range:"October 28 – November 11"},
+  2:{name:"TTMIK Level 6",range:"November 12 – 26"},
+  3:{name:"Fluency & TOPIK 3 sprint",range:"November 27 – December 31"},
   4:{name:"Take TOPIK 3",range:"January"},
   5:{name:"Advance to TOPIK 4/5",range:"February – April"}
 };
@@ -270,7 +269,7 @@ const KGP=[]; KG.forEach(([u,t,ps])=>ps.forEach((g,i)=>KGP.push({u,t,n:i+1,g})))
 const KG12=KGP.filter(x=>x.u<=12).length;
 function kgFor(d){
   if(d<mk(2027,2,1)){
-    const i=dd(d,mk(2026,10,26));
+    const i=dd(d,mk(2026,10,28));
     if(i<KG12) return {x:KGP[i],rev:false};
     return {x:KGP[(i-KG12)%KG12],rev:true};
   }
@@ -305,7 +304,7 @@ function tasksFor(d){
     add("chat","Korean chat practice with Claude","Say your voice memo again into the chat (mic or typing) for corrections, then do today's translation drill and mini conversation. Steps are in the Focus kit tab.");
   };
   if(p===1||p===2){
-    const h=p-1, j=dd(d, h?mk(2026,11,10):mk(2026,10,26)), lv=5+h, a=2*j+1;
+    const h=p-1, j=dd(d, h?mk(2026,11,12):mk(2026,10,28)), lv=5+h, a=2*j+1;
     add("ttA","TTMIK Level "+lv+" · Lesson "+a,"Listen to Lessons "+a+" and "+(a+1)+" back-to-back. Speaking check: say one sentence from this lesson out loud 3 times without reading the transcript.",true);
     add("ttB","TTMIK Level "+lv+" · Lesson "+(a+1),"Speaking check: say one sentence from this lesson out loud 3 times without reading the transcript.",true);
     if(j<14) htsk(26+7*h+Math.floor(j/2), j%2===0);
@@ -314,7 +313,7 @@ function tasksFor(d){
     speak("your TTMIK lessons");
   }else if(p===3||p===4){
     add("iya","TTMIK Iyagi (이야기) or native audio shadowing","Replaces the TTMIK lessons, for listening speed and mouth agility.",true);
-    if(p===3){const j=dd(d,mk(2026,11,25)); if(j<22) htsk(40+Math.floor(j/2), j%2===0); else htsk(null,false,"HTSK Unit 2 is finished. No new words");}
+    if(p===3){const j=dd(d,mk(2026,11,27)); if(j<22) htsk(40+Math.floor(j/2), j%2===0); else htsk(null,false,"HTSK Unit 2 is finished. No new words");}
     else htsk(null,false,"HTSK Unit 2 is finished. No new words");
     kgiu();
     add("pp","Timed practice: past TOPIK II paper","Questions 1–25");
@@ -336,8 +335,8 @@ function tasksFor(d){
 }
 
 function noteFor(d){
-  if(phaseOf(d)===0) return "Day 1 is Monday, October 26. Tap › to see it.";
-  if(d.getTime()===mk(2026,10,26).getTime()) return "Day 1: TTMIK Level 5 Lessons 1 & 2 · KGIU Unit 1, Point 1 (-아/어 보이다) · HTSK Lesson 26 (Day 1) · 3 expanded sentences + 60-second voice memo";
+  if(phaseOf(d)===0) return "Day 1 is Wednesday, October 28. Tap › to see it.";
+  if(d.getTime()===mk(2026,10,28).getTime()) return "Day 1: TTMIK Level 5 Lessons 1 & 2 · KGIU Unit 1, Point 1 (-아/어 보이다) · HTSK Lesson 26 (Day 1) · 3 expanded sentences + 60-second voice memo";
   return "";
 }
 
@@ -351,7 +350,7 @@ function isDone(d,onlyMin){
 function streak(){
   let n=0, d=new Date(today);
   if(!isDone(d,true)) d.setDate(d.getDate()-1);
-  while(d>=mk(2026,10,26) && isDone(d,true)){n++; d.setDate(d.getDate()-1);}
+  while(d>=mk(2026,10,28) && isDone(d,true)){n++; d.setDate(d.getDate()-1);}
   return n;
 }
 
@@ -450,7 +449,7 @@ function renderStats(){
   let tot=0,on=0; TRACK.forEach(t=>{tot+=t.n; on+=(S.grids[t.id]||[]).slice(0,t.n).filter(Boolean).length;});
   Object.values(MS).flat().forEach(([id])=>{tot++; if(S.ms[id]) on++;});
   $("sRoad").textContent=Math.round(on/tot*100)+"%";
-  const p=phaseOf(today); $("sPhase").textContent=p||"–"; $("sPhaseName").textContent=p?PHASES[p].name:"starts Oct 26";
+  const p=phaseOf(today); $("sPhase").textContent=p||"–"; $("sPhaseName").textContent=p?PHASES[p].name:"starts Oct 28";
 }
 
 document.querySelectorAll(".tabs button").forEach(b=>b.addEventListener("click",()=>{
@@ -462,7 +461,6 @@ $("next").onclick=()=>{view.setDate(view.getDate()+1);renderToday();};
 $("goToday").onclick=()=>{view=new Date(today);renderToday();};
 $("minOnly").onchange=renderToday;
 
-// pomodoro timer
 let focusMin=25, mode="focus", round=0, left=focusMin*60, tick=null, endAt=0;
 const fmt=x=>pad(Math.floor(x/60))+":"+pad(x%60);
 const tk=key(today);
